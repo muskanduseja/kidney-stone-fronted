@@ -17,35 +17,35 @@ const Login = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#000", // Black background
-        padding: "20px",
+        backgroundColor: "#000",
+        padding: { xs: "10px", sm: "20px", md: "40px" },
       }}
     >
       <Card
         sx={{
-          width: "90%",
+          width: "95%",
           maxWidth: "1200px",
           minHeight: "80vh",
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           borderRadius: "15px",
           overflow: "hidden",
           boxShadow: "0px 10px 30px rgba(0,0,0,0.3)",
         }}
       >
-        {/* Left Side - Welcome Section */}
         <Box
           sx={{
             flex: 1,
-            background: "linear-gradient(135deg, #2193b0, #6dd5ed)", // Blue Gradient
+            background: "linear-gradient(135deg, #2193b0, #6dd5ed)",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: "40px",
+            padding: { xs: "20px", sm: "30px", md: "40px" },
             color: "#fff",
           }}
         >
-          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
+          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, textAlign: "center" }}>
             Welcome to Kidney
           </Typography>
           <Typography variant="body1" sx={{ textAlign: "center", mb: 3 }}>
@@ -63,10 +63,8 @@ const Login = () => {
           />
         </Box>
 
-        {/* Vertical Border Line */}
-        <Box sx={{ width: "3px", backgroundColor: "#fff" }} />
+        <Box sx={{ width: "3px", backgroundColor: "#fff", display: { xs: "none", md: "block" } }} />
 
-        {/* Right Side - Login Section */}
         <Box
           sx={{
             flex: 1,
@@ -74,15 +72,14 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            background: "linear-gradient(135deg, #2193b0, #6dd5ed)", // Blue Gradient
-            padding: "40px",
+            background: "linear-gradient(135deg, #2193b0, #6dd5ed)",
+            padding: { xs: "20px", sm: "30px", md: "40px" },
           }}
         >
           <Typography variant="h4" sx={{ fontWeight: "bold", color: "#fff", mb: 3 }}>
             User Login
           </Typography>
 
-          {/* Login Form */}
           <Box
             component="form"
             sx={{
@@ -93,84 +90,67 @@ const Login = () => {
               gap: 3,
             }}
           >
-            {/* Email Field */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-              <Typography variant="body1" sx={{ color: "#fff", marginBottom: "8px" }}>
-                Email
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)} // Capture input
-                sx={{
-                  backgroundColor: "#fff",  // White background
-                  borderRadius: "5px",
-                  marginBottom: "15px",
-                  "& .MuiInputBase-input": {
-                    color: "#000", // ✅ Ensures black text color
-                    fontSize: "16px", // Optional: Adjust text size
-                    fontWeight: "bold", // Optional: Make text stand out
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" disablePointerEvents>
-                      <Email sx={{ color: "#2193b0" }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
+            <TextField
+              fullWidth
+              label="Email"
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "5px",
+                "& .MuiInputBase-input": {
+                  color: "#000",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: "#2193b0" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-            {/* Password Field */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-              <Typography variant="body1" sx={{ color: "#fff", marginBottom: "8px" }}>
-                Password
-              </Typography>
-              <TextField
-                fullWidth
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} // Capture input
-                variant="outlined"
-                sx={{
-                  backgroundColor: "#fff",
-                  borderRadius: "5px",
-                  marginBottom: "25px",
-                  "& .MuiInputBase-input": {
-                    color: "#000", // ✅ Ensures black text color
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Lock sx={{ color: "#2193b0" }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? (
-                          <Visibility sx={{ color: "#2193b0" }} />
-                        ) : (
-                          <VisibilityOff sx={{ color: "#2193b0" }} />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
+            <TextField
+              fullWidth
+              type={showPassword ? "text" : "password"}
+              label="Password"
+              variant="outlined"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "5px",
+                "& .MuiInputBase-input": {
+                  color: "#000",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "#2193b0" }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <Visibility sx={{ color: "#2193b0" }} /> : <VisibilityOff sx={{ color: "#2193b0" }} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-            {/* Login Button */}
             <Button
               fullWidth
               variant="contained"
               sx={{
-                background: "linear-gradient(135deg, #1e3c72, #2a5298)", // Darker Blue
+                background: "linear-gradient(135deg, #1e3c72, #2a5298)",
                 color: "#fff",
                 fontWeight: "bold",
                 padding: "12px",
@@ -181,9 +161,8 @@ const Login = () => {
               Login
             </Button>
 
-            {/* Sign Up / Forgot Password */}
             <Typography variant="body2" align="center" sx={{ mt: 2, color: "#fff" }}>
-              Don't have an account?{" "}
+              Don't have an account? {" "}
               <a href="/signup" style={{ color: "#fff", textDecoration: "underline" }}>
                 Sign Up
               </a>
