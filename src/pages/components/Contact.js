@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, TextField, Button, Grid, Paper } from "@mui/material";
 import { LocationOn, Phone, Email } from "@mui/icons-material";
 import Footer from "./Footer"; // ✅ Keep Footer
-import ContactImage from "../../assets/con.jpg"; // ✅ Image imported
+import ContactImage from "../../assets/con_image.jpg"; // ✅ Image imported
 
 const Contact = () => {
   return (
