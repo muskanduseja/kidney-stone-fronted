@@ -18,14 +18,14 @@ const Login = () => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#000",
-        padding: { xs: "10px", sm: "20px", md: "40px" },
+        padding: { xs: "20px", sm: "40px", md: "60px" },
       }}
     >
       <Card
         sx={{
           width: "95%",
           maxWidth: "1200px",
-          minHeight: "80vh",
+          minHeight: "85vh",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           borderRadius: "15px",
@@ -41,14 +41,14 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: { xs: "20px", sm: "30px", md: "40px" },
+            padding: { xs: "30px", sm: "40px", md: "50px" },
             color: "#fff",
           }}
         >
-          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, textAlign: "center" }}>
+          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}>
             Welcome to Kidney
           </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center", mb: 3 }}>
+          <Typography variant="body1" sx={{ textAlign: "center", mb: 4 }}>
             Your trusted platform for kidney stone detection and health insights.
           </Typography>
           <Box
@@ -57,7 +57,7 @@ const Login = () => {
             alt="Kidney Stone"
             sx={{
               width: "100%",
-              maxWidth: "300px",
+              maxWidth: "320px",
               borderRadius: "10px",
             }}
           />
@@ -73,10 +73,10 @@ const Login = () => {
             justifyContent: "center",
             alignItems: "center",
             background: "linear-gradient(135deg, #2193b0, #6dd5ed)",
-            padding: { xs: "20px", sm: "30px", md: "40px" },
+            padding: { xs: "30px", sm: "40px", md: "50px" },
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#fff", mb: 3 }}>
+          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#fff", mb: 4 }}>
             User Login
           </Typography>
 
@@ -87,64 +87,72 @@ const Login = () => {
               maxWidth: "350px",
               display: "flex",
               flexDirection: "column",
-              gap: 3,
+              gap: 4, // Increased spacing between inputs
             }}
           >
-            <TextField
-              fullWidth
-              label="Email"
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: "5px",
-                "& .MuiInputBase-input": {
-                  color: "#000",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Email sx={{ color: "#2193b0" }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
+              <Typography variant="body1" sx={{ color: "#fff", mb: 1.5 }}> {/* Moved label lower */}
+                Email
+              </Typography>
+              <TextField
+                fullWidth
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: "5px",
+                  "& .MuiInputBase-input": {
+                    color: "#000",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email sx={{ color: "#2193b0" }} />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
 
-            <TextField
-              fullWidth
-              type={showPassword ? "text" : "password"}
-              label="Password"
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: "5px",
-                "& .MuiInputBase-input": {
-                  color: "#000",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                },
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Lock sx={{ color: "#2193b0" }} />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? <Visibility sx={{ color: "#2193b0" }} /> : <VisibilityOff sx={{ color: "#2193b0" }} />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
+              <Typography variant="body1" sx={{ color: "#fff", mb: 1.5 }}> {/* Moved label lower */}
+                Password
+              </Typography>
+              <TextField
+                fullWidth
+                type={showPassword ? "text" : "password"}
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                sx={{
+                  backgroundColor: "#fff",
+                  borderRadius: "5px",
+                  "& .MuiInputBase-input": {
+                    color: "#000",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  },
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ color: "#2193b0" }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <Visibility sx={{ color: "#2193b0" }} /> : <VisibilityOff sx={{ color: "#2193b0" }} />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
 
             <Button
               fullWidth
@@ -153,7 +161,7 @@ const Login = () => {
                 background: "linear-gradient(135deg, #1e3c72, #2a5298)",
                 color: "#fff",
                 fontWeight: "bold",
-                padding: "12px",
+                padding: "14px",
                 fontSize: "16px",
                 "&:hover": { background: "linear-gradient(135deg, #2a5298, #1e3c72)" },
               }}
@@ -161,7 +169,7 @@ const Login = () => {
               Login
             </Button>
 
-            <Typography variant="body2" align="center" sx={{ mt: 2, color: "#fff" }}>
+            <Typography variant="body2" align="center" sx={{ mt: 3, color: "#fff" }}>
               Don't have an account? {" "}
               <a href="/signup" style={{ color: "#fff", textDecoration: "underline" }}>
                 Sign Up
