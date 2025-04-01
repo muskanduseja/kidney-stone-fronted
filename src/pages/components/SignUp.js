@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { 
-  Box, Typography, TextField, Button, IconButton, InputAdornment, Card 
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  Card,
 } from "@mui/material";
 import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import KidneyStoneImage from "../../assets/kidney-stone-image.jpg"; // Adjust path as needed
@@ -10,6 +16,50 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!name || !email || !password) {
+      setError("All fields are required.");
+      return;
+    }
+
+    const userData = {
+      username: name,
+      email: email,
+      password: password,
+    };
+
+    try {
+      console.log("Sending request to backend:", userData);
+
+      const response = await fetch("http://127.0.0.1:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+      console.log("Backend Response:", data); // Log backend response
+
+      if (response.ok) {
+        setSuccess("User registered successfully! Redirecting...");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+      } else {
+        setError(data.message || "Signup failed!");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      setError("Error connecting to server.");
+    }
+  };
 
   return (
     <Box
@@ -19,21 +69,21 @@ const SignUp = () => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#000",
-        padding: { xs: "20px", sm: "40px", md: "60px" },
+        padding: "20px",
       }}
     >
       <Card
         sx={{
-          width: "95%",
+          width: "90%",
           maxWidth: "1200px",
-          minHeight: "85vh",
+          minHeight: "80vh",
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
           borderRadius: "15px",
           overflow: "hidden",
           boxShadow: "0px 10px 30px rgba(0,0,0,0.3)",
         }}
       >
+        {/* Left Side - Welcome Section */}
         <Box
           sx={{
             flex: 1,
@@ -42,15 +92,16 @@ const SignUp = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: { xs: "30px", sm: "40px", md: "50px" },
+            padding: "40px",
             color: "#fff",
           }}
         >
-          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}>
+          <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
             Welcome to Kidney
           </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center", mb: 4 }}>
-            Your trusted platform for kidney stone detection and health insights.
+          <Typography variant="body1" sx={{ textAlign: "center", mb: 3 }}>
+            Your trusted platform for kidney stone detection and health
+            insights.
           </Typography>
           <Box
             component="img"
@@ -58,14 +109,16 @@ const SignUp = () => {
             alt="Kidney Stone"
             sx={{
               width: "100%",
-              maxWidth: "320px",
+              maxWidth: "300px",
               borderRadius: "10px",
             }}
           />
         </Box>
 
-        <Box sx={{ width: "3px", backgroundColor: "#fff", display: { xs: "none", md: "block" } }} />
+        {/* Vertical Border Line */}
+        <Box sx={{ width: "3px", backgroundColor: "#fff" }} />
 
+        {/* Right Side - Sign Up Section */}
         <Box
           sx={{
             flex: 1,
@@ -74,13 +127,17 @@ const SignUp = () => {
             justifyContent: "center",
             alignItems: "center",
             background: "linear-gradient(135deg, #2193b0, #6dd5ed)",
-            padding: { xs: "30px", sm: "40px", md: "50px" },
+            padding: "40px",
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#fff", mb: 4 }}>
+          <Typography
+            variant="h4"
+            sx={{ fontWeight: "bold", color: "#fff", mb: 3 }}
+          >
             Sign Up
           </Typography>
 
+          {/* Sign Up Form */}
           <Box
             component="form"
             sx={{
@@ -91,93 +148,91 @@ const SignUp = () => {
               gap: 3,
             }}
           >
-            {/* Name Input */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
-              <Typography variant="body1" sx={{ color: "#fff", mb: 1.2 }}>
-                Name
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={{
-                  backgroundColor: "#fff",
-                  borderRadius: "5px",
-                  "& .MuiInputBase-input": {
-                    color: "#000",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  },
-                }}
-              />
-            </Box>
+            {/* Name Field */}
+            <TextField
+              label="Name"
+              fullWidth
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "5px",
+                "& .MuiInputBase-input": {
+                  color: "#000",
+                },
+              }}
+            />
 
-            {/* Email Input */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
-              <Typography variant="body1" sx={{ color: "#fff", mb: 1.2 }}>
-                Email
-              </Typography>
-              <TextField
-                fullWidth
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                sx={{
-                  backgroundColor: "#fff",
-                  borderRadius: "5px",
-                  "& .MuiInputBase-input": {
-                    color: "#000",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Email sx={{ color: "#2193b0" }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
+            {/* Email Field */}
+            <TextField
+              label="Email"
+              fullWidth
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "5px",
+                "& .MuiInputBase-input": {
+                  color: "#000",
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email sx={{ color: "#2193b0" }} />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-            {/* Password Input */}
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", mb: 2 }}>
-              <Typography variant="body1" sx={{ color: "#fff", mb: 1.2 }}>
-                Password
+            {/* Password Field */}
+            <TextField
+              label="Password"
+              fullWidth
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              variant="outlined"
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "5px",
+                "& .MuiInputBase-input": {
+                  color: "#000",
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "#2193b0" }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? (
+                        <Visibility sx={{ color: "#2193b0" }} />
+                      ) : (
+                        <VisibilityOff sx={{ color: "#2193b0" }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            {/* Error / Success Messages */}
+            {error && (
+              <Typography color="error" sx={{ textAlign: "center" }}>
+                {error}
               </Typography>
-              <TextField
-                fullWidth
-                type={showPassword ? "text" : "password"}
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                sx={{
-                  backgroundColor: "#fff",
-                  borderRadius: "5px",
-                  "& .MuiInputBase-input": {
-                    color: "#000",
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                  },
-                }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Lock sx={{ color: "#2193b0" }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <Visibility sx={{ color: "#2193b0" }} /> : <VisibilityOff sx={{ color: "#2193b0" }} />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Box>
+            )}
+            {success && (
+              <Typography color="success.main" sx={{ textAlign: "center" }}>
+                {success}
+              </Typography>
+            )}
 
             {/* Sign Up Button */}
             <Button
@@ -187,10 +242,13 @@ const SignUp = () => {
                 background: "linear-gradient(135deg, #1e3c72, #2a5298)",
                 color: "#fff",
                 fontWeight: "bold",
-                padding: "14px",
+                padding: "12px",
                 fontSize: "16px",
-                "&:hover": { background: "linear-gradient(135deg, #2a5298, #1e3c72)" },
+                "&:hover": {
+                  background: "linear-gradient(135deg, #2a5298, #1e3c72)",
+                },
               }}
+              onClick={handleSignUp}
             >
               Sign Up
             </Button>
@@ -201,4 +259,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp;
